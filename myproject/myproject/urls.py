@@ -22,11 +22,13 @@ from app3.views import home
 from django.urls import path, include
 
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('cts/<int:s>/<int:n>', create_table_of_squares),
     path('vc/<str:sentence>/', vc),
     path('prime/', home),
     path('app4/', include('app4.urls')),
+    path('app5/', include('app5.urls')),
 
 ]
