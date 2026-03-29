@@ -7,5 +7,10 @@
             {{ student.first_name }} {{ student.last_name }}
         </a>
     </li>
+    
 {% endfor %}
 </ul>
+<br>
+<a href="{% url 'generate_csv' %}">Download CSV</a>
+<br>
+<a href="{% url 'generate_pdf' %}">Download PDF</a>
