@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Student Courses</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+<h2>Search Student</h2>
+
+<input type="text" id="search-box" placeholder="Enter student name">
+
+<div id="results"></div>
+
+<script>
+$(document).ready(function() {
+    $('#search-box').on('keyup', function() {
+        var query = $(this).val();
+
+        $.ajax({
+            url: "{% url 'search_students' %}",
+            data: { 'query': query },
+            success: function(response) {
+                var output = "";
+
+                response.results.forEach(function(student) {
+                    output += "<p><b>" + student.name + "</b><br>";
+                    output += "Courses: " + student.courses.join(", ") + "</p>";
+                });
+
+                $('#results').html(output);
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>

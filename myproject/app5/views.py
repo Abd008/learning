@@ -5,6 +5,7 @@ from io import BytesIO
 from reportlab.pdfgen import canvas
 from django.views.generic import ListView, DetailView
 from django.http import JsonResponse
+from django.shortcuts import render
 
 
 class StudentListView(ListView):
@@ -64,3 +65,26 @@ def ajax_student(request):
 
     from django.shortcuts import render
     return render(request, 'app5/ajax_form.html')
+
+
+
+def search_page(request):
+    return render(request, 'app5/search.html')
+
+
+def search_students(request):
+    query = request.GET.get('query', '')
+
+    students = Student.objects.filter(first_name__icontains=query) | \
+               Student.objects.filter(last_name__icontains=query)
+
+    results = []
+
+    for student in students:
+        courses = [course.name for course in student.courses.all()]
+        results.append({
+            'name': f"{student.first_name} {student.last_name}",
+            'courses': courses
+        })
+
+    return JsonResponse({'results': results})

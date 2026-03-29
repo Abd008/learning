@@ -2,6 +2,8 @@ from django.urls import path
 from .views import StudentListView, StudentDetailView
 from .views import generate_csv, generate_pdf
 from .views import ajax_student
+from .views import search_page, search_students
+
 
 
 urlpatterns = [
@@ -10,7 +12,10 @@ urlpatterns = [
     path('students/csv/', generate_csv, name='generate_csv'),
     path('students/pdf/', generate_pdf, name='generate_pdf'),
     path('ajax/', ajax_student, name='ajax_student'),
+    path('search-page/', search_page, name='search_page'),
+    path('search/', search_students, name='search_students'),
 
 ]
+
 
 

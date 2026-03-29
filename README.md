@@ -65,7 +65,7 @@ Server runs at: **http://127.0.0.1:8000/**
 
 ## 📚 What's Inside
 
-This workspace contains **5 Django applications** implementing **10 lab manual programs**:
+This workspace contains **5 Django applications** implementing **11 lab manual programs**:
 
 | App | Program | Topic | URL |
 |-----|---------|-------|-----|
@@ -75,7 +75,8 @@ This workspace contains **5 Django applications** implementing **10 lab manual p
 | **app4** | Programs 6 & 7 | Student-Course Models & Admin | `/admin/` |
 | **app5** | Program 8 | Class-Based Views | `/app5/students/` |
 | **app5** | Program 9 | CSV & PDF Generation | `/app5/students/csv/`, `/app5/students/pdf/` |
-| **app5** | Program 10 | AJAX Registration & Search | `/app5/ajax/`, `/app5/search-page/` |
+| **app5** | Program 10 | AJAX Registration | `/app5/ajax/` |
+| **app5** | Program 11 | AJAX Course Search | `/app5/search-page/` |
 
 ---
 
@@ -146,7 +147,8 @@ python manage.py migrate
 4. Explore **App4** - Database models and relationships
 5. Master **App5 (P8)** - Advanced class-based views
 6. Generate **App5 (P9)** - CSV and PDF file exports
-7. Build **App5 (P10)** - AJAX and real-time interactions
+7. Build **App5 (P10)** - AJAX registration without page reload
+8. Create **App5 (P11)** - AJAX search for courses by student
 
 ---
 
@@ -162,7 +164,8 @@ DjangoLab/
     ├── Program 7: Admin Interface (App4)
     ├── Program 8: Class-Based Views (App5)
     ├── Program 9: CSV & PDF Generation (App5)
-    └── Program 10: AJAX Interactions (App5)
+    ├── Program 10: AJAX Registration (App5)
+    └── Program 11: AJAX Course Search (App5)
 ```
 
 ---

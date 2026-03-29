@@ -1,10 +1,10 @@
-# Django Lab Manual - Programs 3 to 10
+# Django Lab Manual - Programs 3 to 11
 
-A comprehensive Django project demonstrating various web development concepts through practical lab exercises. This project implements multiple applications covering Django fundamentals to advanced features and AJAX interactions.
+A comprehensive Django project demonstrating various web development concepts through practical lab exercises. This project implements multiple applications covering Django fundamentals to advanced features, including AJAX interactions and file generation.
 
 ## 📋 Project Overview
 
-This is a Django 5.2.12 project containing multiple applications (App1-App5) that progressively demonstrate Django concepts through hands-on implementations, from basic routing to advanced AJAX interactions, CSV/PDF generation, and class-based views.
+This is a Django 5.2.12 project containing multiple applications (App1-App5) that progressively demonstrate Django concepts through hands-on implementations, from basic routing to advanced AJAX-based search applications, CSV/PDF generation, and class-based views.
 
 ## 🗂️ Project Structure
 
@@ -25,7 +25,7 @@ myproject/
 ├── app2/                   # Program 4: Vowels & Consonants Counter
 ├── app3/                   # Program 5: Prime Number Checker
 ├── app4/                   # Programs 6 & 7: Student-Course Management (Models & Admin)
-└── app5/                   # Programs 8, 9, 10: Advanced Views, CSV/PDF, and AJAX
+└── app5/                   # Programs 8, 9, 10, 11: Advanced Views, CSV/PDF, and AJAX
 ```
 
 ---
@@ -208,8 +208,6 @@ from io import BytesIO             # In-memory file handling
 
 **URLs**:
 - `/app5/ajax/` - AJAX endpoint for student registration
-- `/app5/search-page/` - Search form page (GET request returns HTML)
-- `/app5/search/` - AJAX endpoint for searching students and their courses
 
 **View Functions**:
 
@@ -219,18 +217,9 @@ def ajax_student(request):
     # Accepts: first_name, last_name, email (POST)
     # Returns: JSON with success status and message
     # Validates all fields and checks email uniqueness
-
-def search_page(request):
-    """Display search page with AJAX search form"""
-    # Returns: HTML page with search interface
-
-def search_students(request):
-    """AJAX endpoint to search students and their courses"""
-    # Accepts: query parameter (student name, min 2 chars)
-    # Returns: JSON with matching students and their enrolled courses
 ```
 
-**AJAX Templates**:
+**AJAX Template**:
 
 - **`ajax_form.html`**:
   - Form to register new students
@@ -238,12 +227,6 @@ def search_students(request):
   - Real-time validation feedback
   - jQuery AJAX submission
   - Error/success messages
-
-- **`search.html`**:
-  - Live search interface
-  - Search by first or last name
-  - Displays student details and enrolled courses
-  - Real-time results as user types
 
 **JavaScript Features**:
 
@@ -261,16 +244,91 @@ $('#student-form').on('submit', function(e) {
         }
     });
 });
+```
 
+**JSON Response Format**:
+
+```json
+{
+    "success": true,
+    "message": "Student [Name] registered successfully",
+    "student_id": 5
+}
+```
+
+**Validation Rules**:
+- ✓ All fields (first_name, last_name, email) are required
+- ✓ Email must be valid email format
+- ✓ Email must be unique (no duplicates)
+- ✓ Real-time feedback on validation failures
+
+**Files**:
+- `app5/views.py`: `ajax_student()` function
+- `app5/urls.py`: AJAX URL pattern for registration
+- `app5/templates/app5/ajax_form.html`: Student registration form
+
+**Test it**:
+- Access and fill the form
+- Submit without page reload
+- See real-time success/error messages
+
+---
+
+### **App5 - Program 11: AJAX Course Search Application**
+**Question**: Develop a search application in Django using AJAX that displays courses enrolled by a student being searched.
+
+**Features**:
+- Real-time search for students by name
+- Display all enrolled courses for matching students
+- No page refresh required
+- Minimum 2 character search requirement
+- Instant results as user types
+
+**URLs**:
+- `/app5/search-page/` - Search form page (GET request returns HTML)
+- `/app5/search/` - AJAX endpoint for searching students and their courses
+
+**View Functions**:
+
+```python
+def search_page(request):
+    """Display search page with AJAX search form"""
+    # Returns: HTML page with search interface
+
+def search_students(request):
+    """AJAX endpoint to search students and their courses"""
+    # Accepts: query parameter (student name, min 2 chars)
+    # Returns: JSON with matching students and their enrolled courses
+    # Searches by first_name and last_name
+```
+
+**AJAX Template**:
+
+- **`search.html`**:
+  - Live search interface with input field
+  - Search by first or last name
+  - Displays student name, email, and enrolled courses
+  - Real-time results as user types
+  - Styled result cards with course information
+
+**JavaScript Features**:
+
+```javascript
 // Real-time search with AJAX
 $('#search-box').on('keyup', function() {
     var query = $(this).val();
+    
+    // Only search if query is at least 2 characters
+    if (query.length < 2) {
+        $('#results').html('');
+        return;
+    }
     
     $.ajax({
         url: "{% url 'search_students' %}",
         data: { 'query': query },
         success: function(response) {
-            // Display search results
+            // Display search results dynamically
         }
     });
 });
@@ -279,14 +337,6 @@ $('#search-box').on('keyup', function() {
 **JSON Response Format**:
 
 ```json
-// Registration Response
-{
-    "success": true,
-    "message": "Student [Name] registered successfully",
-    "student_id": 5
-}
-
-// Search Response
 {
     "results": [
         {
@@ -294,34 +344,55 @@ $('#search-box').on('keyup', function() {
             "name": "John Doe",
             "email": "john@example.com",
             "courses": ["Python", "Django", "Web Development"]
+        },
+        {
+            "id": 2,
+            "name": "Jane Smith",
+            "email": "jane@example.com",
+            "courses": ["JavaScript", "React"]
         }
     ]
 }
 ```
 
-**Validation Rules**:
-- ✓ All fields (first_name, last_name, email) are required
-- ✓ Email must be valid email format
-- ✓ Email must be unique (no duplicates)
-- ✓ Search requires minimum 2 characters
-- ✓ Real-time feedback on validation failures
+**Search Features**:
+- ✓ Case-insensitive search (searches `first_name` and `last_name`)
+- ✓ Minimum 2 characters required before search
+- ✓ Displays "No courses enrolled" if student has no courses
+- ✓ Displays "No students found" when no matches
+- ✓ Instant results update as user types
+- ✓ Email validation and error handling
+
+**Database Query**:
+
+```python
+students = Student.objects.filter(
+    first_name__icontains=query
+) | Student.objects.filter(
+    last_name__icontains=query
+)
+
+# For each student, retrieve enrolled courses
+courses = [course.name for course in student.courses.all()]
+```
 
 **Files**:
-- `app5/views.py`: `ajax_student()`, `search_page()`, `search_students()` functions
-- `app5/urls.py`: AJAX URL patterns
-- `app5/templates/app5/ajax_form.html`: Student registration form
-- `app5/templates/app5/search.html`: Student search interface
+- `app5/views.py`: `search_page()` and `search_students()` functions
+- `app5/urls.py`: AJAX URL patterns for search
+- `app5/templates/app5/search.html`: Search interface
 
 **Test it**:
-1. **Register a student**:
-   - Add an HTML link to `ajax_form.html` or access via URL
-   - Fill the form and submit
-   - See real-time success/error messages
-   
-2. **Search students**:
-   - Visit: `http://127.0.0.1:8000/app5/search-page/`
-   - Type a student name (minimum 2 characters)
-   - See live search results with enrolled courses
+1. Make sure you have students with enrolled courses in the database
+2. Visit: `http://127.0.0.1:8000/app5/search-page/`
+3. Type a student's first or last name (minimum 2 characters)
+4. See live results with student details and their enrolled courses
+5. Results update instantly as you type
+
+**Example**:
+- Search "John" → Shows all students with "John" in first_name
+- Search "Doe" → Shows all students with "Doe" in last_name
+- Search "xy" → Minimum character requirement, no results
+- Results include: Student name, email, and all enrolled courses
 
 ---
 
@@ -403,17 +474,19 @@ Navigate to: `http://127.0.0.1:8000/app5/students/pdf/`
 - Downloads a PDF file with all student records
 - Open in any PDF reader
 
-#### **App5 - AJAX Student Registration**
+#### **App5 - AJAX Student Registration (Program 10)**
 Navigate to: `http://127.0.0.1:8000/app5/ajax/`
 - Register new students without page reload
 - See real-time error/success messages
 - Try with an existing email to see validation
 
-#### **App5 - AJAX Student Search**
+#### **App5 - AJAX Course Search Application (Program 11)**
 Navigate to: `http://127.0.0.1:8000/app5/search-page/`
 - Search for students by name (type at least 2 characters)
-- Live results showing student details and enrolled courses
+- Live results showing student details and all enrolled courses
 - No page reload required
+- Results update instantly as you type
+- Try searching different student names to see their courses
 
 ---
 
