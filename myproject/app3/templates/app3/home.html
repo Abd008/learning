@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prime Checker</title>
+</head>
+<body>
+
+<h1>Prime Number Checker</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="number" placeholder="Enter number">
+    <button type="submit">Check</button>
+</form>
+
+{% if result is not None %}
+    <h2>
+        {% if result == True %}
+            {{ number }} is PRIME ✅
+        {% elif result == False %}
+            {{ number }} is NOT PRIME ❌
+        {% else %}
+            {{ result }}
+        {% endif %}
+    </h2>
+{% endif %}
+
+</body>
+</html>
