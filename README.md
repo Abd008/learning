@@ -1,6 +1,6 @@
 # DjangoLab - Lab Manual Projects
 
-A comprehensive Django learning workspace containing multiple practical lab exercises covering Django fundamentals to advanced features.
+A comprehensive Django learning workspace containing multiple practical lab exercises covering Django fundamentals to advanced features, including AJAX interactions and file generation.
 
 ## 📁 Project Structure
 
@@ -21,7 +21,7 @@ DjangoLab/
 │   │   ├── asgi.py
 │   │   └── wsgi.py
 │   │
-│   └── app1-app5/               # 5 Django applications
+│   └── app1-app5/               # 5 Django applications (10 programs)
 │       └── (See myproject/README.md for details)
 │
 ├── .git/                         # Git version control
@@ -65,7 +65,7 @@ Server runs at: **http://127.0.0.1:8000/**
 
 ## 📚 What's Inside
 
-This workspace contains **5 Django applications** implementing lab manual questions:
+This workspace contains **5 Django applications** implementing **10 lab manual programs**:
 
 | App | Program | Topic | URL |
 |-----|---------|-------|-----|
@@ -74,6 +74,8 @@ This workspace contains **5 Django applications** implementing lab manual questi
 | **app3** | Program 5 | Prime Number Checker | `/prime/` |
 | **app4** | Programs 6 & 7 | Student-Course Models & Admin | `/admin/` |
 | **app5** | Program 8 | Class-Based Views | `/app5/students/` |
+| **app5** | Program 9 | CSV & PDF Generation | `/app5/students/csv/`, `/app5/students/pdf/` |
+| **app5** | Program 10 | AJAX Registration & Search | `/app5/ajax/`, `/app5/search-page/` |
 
 ---
 
@@ -142,7 +144,9 @@ python manage.py migrate
 2. Move to **App2** - String processing and URL parameters
 3. Try **App3** - Logic and conditionals
 4. Explore **App4** - Database models and relationships
-5. Master **App5** - Advanced class-based views
+5. Master **App5 (P8)** - Advanced class-based views
+6. Generate **App5 (P9)** - CSV and PDF file exports
+7. Build **App5 (P10)** - AJAX and real-time interactions
 
 ---
 
@@ -151,11 +155,14 @@ python manage.py migrate
 ```
 DjangoLab/
 └── myproject/README.md          ← Detailed project docs
-    ├── App1: Table of Squares
-    ├── App2: Vowels & Consonants
-    ├── App3: Prime Checker
-    ├── App4: Student-Course Models
-    └── App5: Class-Based Views
+    ├── Program 3: Table of Squares (App1)
+    ├── Program 4: Vowels & Consonants (App2)
+    ├── Program 5: Prime Checker (App3)
+    ├── Program 6: Student-Course Models (App4)
+    ├── Program 7: Admin Interface (App4)
+    ├── Program 8: Class-Based Views (App5)
+    ├── Program 9: CSV & PDF Generation (App5)
+    └── Program 10: AJAX Interactions (App5)
 ```
 
 ---
