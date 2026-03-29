@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AJAX Student Registration</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+<h1>Register Student (AJAX)</h1>
+
+<form id="student-form">
+    {% csrf_token %}
+    <input type="text" name="first_name" placeholder="First Name"><br><br>
+    <input type="text" name="last_name" placeholder="Last Name"><br><br>
+    <input type="email" name="email" placeholder="Email"><br><br>
+    <button type="submit">Submit</button>
+</form>
+
+<div id="response"></div>
+
+<script>
+$(document).ready(function() {
+    $('#student-form').on('submit', function(e) {
+        e.preventDefault();  // 🚀 stops page reload
+
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'ajax_student' %}",
+            data: $(this).serialize(),
+            success: function(response) {
+                if (response.success) {
+                    $('#response').html('<p style="color:green;">Student Registered!</p>');
+                    $('#student-form')[0].reset();
+                }
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>

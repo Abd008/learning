@@ -4,6 +4,7 @@ from app4.models import Student
 from io import BytesIO
 from reportlab.pdfgen import canvas
 from django.views.generic import ListView, DetailView
+from django.http import JsonResponse
 
 
 class StudentListView(ListView):
@@ -44,3 +45,22 @@ def generate_pdf(request):
     buffer.seek(0)
 
     return FileResponse(buffer, as_attachment=True, filename='students.pdf')
+
+
+def ajax_student(request):
+    if request.method == 'POST':
+        first = request.POST.get('first_name')
+        last = request.POST.get('last_name')
+        email = request.POST.get('email')
+
+        from app4.models import Student
+        Student.objects.create(
+            first_name=first,
+            last_name=last,
+            email=email
+        )
+
+        return JsonResponse({'success': True})
+
+    from django.shortcuts import render
+    return render(request, 'app5/ajax_form.html')
